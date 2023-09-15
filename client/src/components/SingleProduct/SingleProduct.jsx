@@ -9,7 +9,6 @@ import{
     FaPinterest,
     FaCartPlus,
 } from "react-icons/fa";
-import prod from'../../assets/products/earbuds-prod-1.webp';
 import useFetch from "../../hooks/useFetch"
 import { useParams } from "react-router-dom";
 import { Context } from "../../utils/context";
@@ -17,9 +16,9 @@ import { Context } from "../../utils/context";
 
 const SingleProduct = () => {
     const[quantity, setQuantity] = useState(1);
-    const {id} = useParams();
-    const {data} = useFetch(`/api/products?populate=*&[filters][id]=${id}`)
-    const {handleAddToCart} = useContext(Context);
+    const { id } = useParams();
+    const { data } = useFetch(`/api/products?populate=*&[filters][id]=${id}`)
+    const { handleAddToCart } = useContext(Context);
     const increment = () => {
         setQuantity((prevState) => prevState +1)
     };
@@ -30,7 +29,7 @@ const SingleProduct = () => {
         })
     };
     if(!data) return;
-    const product = data.data[0].attributes
+    const product = data?.data?.[0]?.attributes;
     return <div className="single-product-main-content">
         <div className="layout">
             <div className="single-product-page">
@@ -49,7 +48,7 @@ const SingleProduct = () => {
                             <span onClick={increment}>+</span>
                         </div>
                         <button className="add-to-cart-button" onClick={() => {
-                            handleAddToCart(data.data[0].attributes , quantity);
+                            handleAddToCart(data?.data?.[0] , quantity);
                             setQuantity(1);
                         }}>
                             <FaCartPlus size={20}/>
@@ -80,7 +79,8 @@ const SingleProduct = () => {
 
                 </div>
             </div>
-            <RelatedProducts productId={id} categoryId={product.categories.data[0].id} />
+            <RelatedProducts productId={id} 
+            categoryId={product.categories.data[0].id} />
         </div>
     </div>;
 };
