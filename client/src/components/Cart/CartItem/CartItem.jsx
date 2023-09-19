@@ -11,7 +11,7 @@ const CartItem = () => {
     return( 
     <div className="cart-products">
         {CartItems?.map((item) => (
-                <div key={item.id} className="cart-product" onClick={()=>{}}>
+                <div key={item.id} className="cart-product" >
                 <div className="img-container">
                     <img src={process.env.REACT_APP_DEV_URL + item.attributes.img.data[0].attributes.url} alt="" />
                 </div>
